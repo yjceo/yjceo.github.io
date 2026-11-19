@@ -1253,6 +1253,20 @@ body.app #yceo-mo{top:0!important}
   #yceo-mv .p{padding:12px 16px}
   #yceo-mo .mo-close{top:6px}
 }
+/* 회원 화면 표: 최대한 한 줄 (긴 글 칸만 줄바꿈) */
+#yceo-m .m-tbl td{white-space:nowrap}
+#yceo-m .m-tbl td.wrap,#yceo-m .m-tbl td.msg,#yceo-m .m-tbl.bank td:nth-child(2),#yceo-m .m-tbl.spon td:nth-child(5){white-space:normal}
+#yceo-m .m-tbl th,#yceo-m .m-tbl td{padding:9px 11px}
+#yceo-m .m-tbl.apps .sub,#yceo-m .m-tbl.inq .sub{display:inline;margin-left:6px}
+#yceo-m .m-tbl.apps td.st{white-space:normal;min-width:190px}
+/* 회원명부: 이름·회사·휴대폰은 내용만큼, 주생산품이 남는 폭을 쓰고 넘치면 줄바꿈 */
+#yceo-m .m-tbl.roster td.ph{width:1%;font-variant-numeric:tabular-nums}
+#yceo-m .m-tbl.roster td.prod{width:auto;min-width:110px;word-break:keep-all;line-height:1.45}
+@media (max-width:900px){#yceo-m .m-tbl.roster td.prod{min-width:210px}}
+#yceo-m .m-tbl.roster td:first-child,#yceo-m .m-tbl.roster td:nth-child(2),#yceo-m .m-tbl.roster td:last-child{width:1%}
+#yceo-m .m-tbl .ico{gap:4px;flex-wrap:nowrap}
+#yceo-m .m-tbl .ico button,#yceo-m .m-tbl.tight .ico button{width:28px;height:28px;font-size:14px;border-radius:7px}
+#yceo-m .m-tbl .ico button.up i{width:13px;height:13px;font-size:10px;line-height:13px;right:-3px;bottom:-3px}
 /* 첫 화면: 알파 셋 인사 */
 #yceo-walk{position:fixed;top:0;left:0;right:0;bottom:0;z-index:2147483060;display:flex;align-items:center;justify-content:center;cursor:pointer;background:radial-gradient(ellipse at 50% 45%,#ffffff 0%,#f3f8f5 55%,#e6efea 100%);opacity:1;transition:opacity 1.4s ease;font-family:"Noto Sans KR","Apple SD Gothic Neo",sans-serif}
 #yceo-walk.out{opacity:0;pointer-events:none}
@@ -2814,7 +2828,7 @@ function yceoMembers(root, ENDPOINT, LOGO, onRole){
       + '<div class="legend">' + (adm() ? '<span>📝 신청서</span>' : '') + '<span>🏢 사업자등록증</span><span>🏭 공장등록증</span><span>📇 명함</span>' + (adm() ? '<span>🔑 비밀번호 초기화</span>' : '') + '</div>'
       + (list.length ? '<div class="m-tbl tight roster"><table><thead><tr><th>이름 / 직책</th><th>회사</th><th>주생산품</th><th>연락처</th><th>관리</th></tr></thead><tbody>'
         + list.map((m, i) => (i === 0 && nOff ? grp('임원진', nOff) : '') + (i === nOff && nOff && i < list.length ? grp('일반회원', list.length - nOff) : '') + '<tr' + (m.mine ? ' class="mine"' : '') + '><td><button type="button" class="lk" data-card="' + m.row + '">' + esc(m.name) + '</button>' + (m.position ? '<span class="pos">' + esc(m.position) + '</span>' : '') + (m.title ? ' <span class="chip role">' + esc(m.title) + '</span>' : '') + (m.golf && (adm() || (D.me && D.me.golf)) ? ' <span class="chip golf">골프</span>' : '') + (isNew('roster', toTime(m.approvedAt)) ? NEW : '') + '</td>'
-          + '<td><button type="button" class="lk" data-card="' + m.row + '">' + esc(m.company) + '</button></td><td>' + esc(m.product) + '</td><td class="nowrap">' + esc(m.phone || '-') + '</td><td>' + icons(m) + '</td></tr>').join('')
+          + '<td class="nowrap"><button type="button" class="lk" data-card="' + m.row + '">' + esc(m.company) + '</button></td><td class="wrap prod">' + esc(m.product) + '</td><td class="nowrap ph">' + esc(m.phone || '-') + '</td><td>' + icons(m) + '</td></tr>').join('')
         + '</tbody></table></div>' : empty(all.length ? '검색 결과가 없습니다' : '아직 정회원이 없습니다', all.length ? '' : '입회신청 관리에서 승인하면 이곳에 자동으로 올라옵니다.'));
   }
   const duesOf = row => (D.dues || []).find(d => d.id === duesYear + '_' + row) || { paid:0, date:'' };
@@ -3008,7 +3022,7 @@ function yceoMembers(root, ENDPOINT, LOGO, onRole){
     const pend = (D.apps || []).filter(o => o.status === '접수').length;
     return bar('입회신청 관리', '서류의 📝 아이콘으로 신청서를 확인한 뒤, 상태 칸의 [승인] 버튼을 누르면 정회원이 되어 회원명부에 자동 등록됩니다. 대기 ' + pend + '건',
         '<select class="m-inp" id="app-f" style="flex:0 1 170px"><option value="">전체</option><option value="접수"' + (appF === '접수' ? ' selected' : '') + '>접수 (대기)</option><option value="정회원"' + (appF === '정회원' ? ' selected' : '') + '>정회원</option><option value="반려"' + (appF === '반려' ? ' selected' : '') + '>반려</option></select>')
-      + (list.length ? '<div class="m-tbl"><table><thead><tr><th>접수일</th><th>회사명</th><th>신청자</th><th>추천인</th><th>서류</th><th>상태 · 처리</th></tr></thead><tbody>'
+      + (list.length ? '<div class="m-tbl apps"><table><thead><tr><th>접수일</th><th>회사명</th><th>신청자</th><th>추천인</th><th>서류</th><th>상태 · 처리</th></tr></thead><tbody>'
         + list.map(o => '<tr><td>' + esc(o.at) + (o.status === '접수' ? NEW : '') + '</td><td><b>' + esc(o.company) + '</b><span class="sub">' + esc(o.product) + '</span></td><td>' + esc(o.name) + '<span class="sub">' + esc(o.phone) + '</span></td><td>' + esc(o.rec1) + (o.rec2 ? ', ' + esc(o.rec2) : '') + '</td>'
           + '<td><div class="ico"><button type="button" title="신청서" aria-label="신청서 보기" data-app="' + o.row + '">📝</button><button type="button" title="사업자등록증" data-file="biz" data-row="' + o.row + '"' + (o.biz ? '' : ' disabled') + '>🏢</button><button type="button" title="공장등록증" data-file="fac" data-row="' + o.row + '"' + (o.fac ? '' : ' disabled') + '>🏭</button><button type="button" title="명함" data-file="card" data-row="' + o.row + '"' + (o.card ? '' : ' disabled') + '>📇</button></div></td>'
           + '<td class="st" data-strow="' + o.row + '">' + stCell(o) + '</td></tr>').join('')
@@ -3148,6 +3162,9 @@ function yceoMembers(root, ENDPOINT, LOGO, onRole){
   function guide(html){ var g = $('#app-guide'); g.querySelector('.box').innerHTML = html; g.hidden = false;
     g.onclick = function(e){ if (e.target === g || (e.target.closest && e.target.closest('[data-close]'))) g.hidden = true; }; }
 
+  /* 앱을 열면 아이콘 숫자 지우기 */
+  function clearBadge(){ try { if (navigator.clearAppBadge) navigator.clearAppBadge().catch(function(){}); if (window.caches) caches.open('yceo-badge').then(function(c){ c.put('n', new Response('0')); }); } catch (e) {} }
+  clearBadge(); document.addEventListener('visibilitychange', function(){ if (!document.hidden) clearBadge(); });
   /* 1) 회원 전용 화면 바로 열기 */
   function openMembers(){
     var i = document.getElementById('yceo-intro'); if (i) i.remove();

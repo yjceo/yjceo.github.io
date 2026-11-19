@@ -14,3 +14,14 @@ self.addEventListener('notificationclick', function(e){
     return self.clients.openWindow('./');
   }));
 });
+
+/* 앱 아이콘에 숫자(읽지 않은 알림 수) 표시 — 아이폰(iOS 16.4+)·PC 지원, 안드로이드는 휴대폰 설정의 '숫자 배지'로 표시 */
+function bumpBadge(){
+  return caches.open('yceo-badge').then(function(c){
+    return c.match('n').then(function(r){ return r ? r.text() : '0'; }).then(function(t){
+      var n = (parseInt(t, 10) || 0) + 1;
+      return c.put('n', new Response(String(n))).then(function(){ if (self.navigator && self.navigator.setAppBadge) return self.navigator.setAppBadge(n).catch(function(){}); });
+    });
+  }).catch(function(){});
+}
+self.addEventListener('push', function(e){ e.waitUntil(bumpBadge()); });
