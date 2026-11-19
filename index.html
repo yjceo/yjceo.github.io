@@ -1342,6 +1342,11 @@ body.app #yceo-mo{top:0!important}
 #yceo-m .m-tbl.roster td.prod{min-width:0}
 #yceo-m .m-tbl.roster td.ph{text-align:center}
 }
+/* 정기모임 참석·불참·미정: 파스텔 색 구분 (누르면 진한 색) */
+#yceo-m .rsvp button.yes:not([aria-pressed="true"]){background:#e2f3e7!important;border-color:#b6dcc2!important;color:#1f6b3e!important}
+#yceo-m .rsvp button.no:not([aria-pressed="true"]){background:#fbe5e1!important;border-color:#efc0b8!important;color:#a3362a!important}
+#yceo-m .rsvp button.maybe:not([aria-pressed="true"]){background:#fdf0d6!important;border-color:#eed39a!important;color:#86560b!important}
+#yceo-m .rsvp button:not([aria-pressed="true"]):hover{filter:brightness(.96)}
 /* 첫 화면: 알파 셋 인사 */
 #yceo-walk{position:fixed;top:0;left:0;right:0;bottom:0;z-index:2147483060;display:flex;align-items:center;justify-content:center;cursor:pointer;background:radial-gradient(ellipse at 50% 45%,#ffffff 0%,#f3f8f5 55%,#e6efea 100%);opacity:1;transition:opacity 1.4s ease;font-family:"Noto Sans KR","Apple SD Gothic Neo",sans-serif}
 #yceo-walk.out{opacity:0;pointer-events:none}
