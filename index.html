@@ -16,7 +16,7 @@
 <style>
 html,body{margin:0;background:#f4f6f5}
 /* 앱에서는 첫 화면(홍보 페이지) 대신 회원 전용 화면만 */
-body.app #yceo-intro{display:none!important}
+body.app #yceo-intro,body.app #yceo-walk,body.app #yceo-ring{display:none!important}
 body.app #yceo-mo .mo-close{display:none!important}
 body.app #yceo-mo{top:0!important}
 #app-bar{position:fixed;left:12px;right:12px;bottom:calc(14px + env(safe-area-inset-bottom));z-index:2147483600;background:#0e2a2c;color:#fff;border-radius:14px;padding:14px 16px;box-shadow:0 12px 30px rgba(0,0,0,.28);font:15px/1.5 "Noto Sans KR","Apple SD Gothic Neo",sans-serif;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
@@ -41,6 +41,7 @@ body.app #yceo-mo{top:0!important}
 <script>
 /* 앱: 로그인 유지 (휴대폰을 껐다 켜도 30일 동안 로그인 상태) */
 (function(){
+  try { localStorage.setItem('yceo_walk', '1'); } catch (e) {}
   var K = ['yceo_tok', 'yceo_role', 'yceo_area'];
   try { K.forEach(function(k){ var v = localStorage.getItem('app_' + k); if (v && !sessionStorage.getItem(k)) sessionStorage.setItem(k, v); }); } catch (e) {}
   setInterval(function(){ try { K.forEach(function(k){ var v = sessionStorage.getItem(k); if (v) localStorage.setItem('app_' + k, v); else localStorage.removeItem('app_' + k); }); } catch (e) {} }, 1500);
