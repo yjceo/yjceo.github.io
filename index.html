@@ -1300,7 +1300,7 @@ body.app #yceo-mo{top:0!important}
 #yceo-m .m-tbl.cmp{width:auto;max-width:none}
 #yceo-m .m-tbl.cmp table{width:100%}
 /* 모바일: 요약 카드는 '회비 납부내역'에서만 */
-@media (max-width:1100px){#yceo-m .summary.sec-spon,#yceo-m .summary.sec-bank{display:none}}
+#yceo-m .summary.sec-spon,#yceo-m .summary.sec-bank{display:none}
 #yceo-m .m-tbl.spon .mob-memo{display:none}
 @media (max-width:640px){
   #yceo-m .m-tbl.spon table{font-size:13.5px}
@@ -1329,6 +1329,18 @@ body.app #yceo-mo{top:0!important}
   #yceo-m .m-tbl.dues td.act .btn.xs{padding:2px 5px!important;margin-left:2px}
   #yceo-m .m-tbl.dues input.y-num{width:68px}
   #yceo-m .m-tbl.dues input[type=date]{width:108px}
+}
+/* PC 회원명부: 칸 너비 고정 비율 (주생산품이 너무 넓지 않게) */
+@media (min-width:1101px){
+#yceo-m .m-tbl.roster table{table-layout:fixed;width:100%}
+#yceo-m .m-tbl.roster th:nth-child(1){width:21%}
+#yceo-m .m-tbl.roster th:nth-child(2){width:22%}
+#yceo-m .m-tbl.roster th:nth-child(3){width:27%}
+#yceo-m .m-tbl.roster th:nth-child(4){width:14%}
+#yceo-m .m-tbl.roster th:nth-child(5){width:16%}
+#yceo-m .m-tbl.roster td{width:auto!important;overflow:hidden;text-overflow:ellipsis}
+#yceo-m .m-tbl.roster td.prod{min-width:0}
+#yceo-m .m-tbl.roster td.ph{text-align:center}
 }
 /* 첫 화면: 알파 셋 인사 */
 #yceo-walk{position:fixed;top:0;left:0;right:0;bottom:0;z-index:2147483060;display:flex;align-items:center;justify-content:center;cursor:pointer;background:radial-gradient(ellipse at 50% 45%,#ffffff 0%,#f3f8f5 55%,#e6efea 100%);opacity:1;transition:opacity 1.4s ease;font-family:"Noto Sans KR","Apple SD Gothic Neo",sans-serif}
@@ -2962,7 +2974,7 @@ function yceoMembers(root, ENDPOINT, LOGO, onRole){
       + (all.length ? '<div class="m-tbl tight dues cmp"><table><thead><tr><th>이름</th><th>업체명</th><th class="c">연회비</th><th class="c">납부액</th><th class="c">납부일</th><th class="c">상태</th>' + (A ? '<th class="c">관리</th>' : '') + '</tr></thead><tbody>'
         + list.map(m => { const d = duesOf(m.row), s = dst(+d.paid || 0, d); const nt = d.note ? '<span class="sub dnote" title="' + esc(d.note) + '">※ ' + esc(d.note) + '</span>' : '';
           return '<tr' + (m.former ? ' class="fmr"' : '') + '><td><b>' + esc(m.name) + '</b>' + (m.former ? ' ' + FMR : '') + (isNew('dues', d.updatedAt) ? NEW : '') + '</td><td class="co">' + esc(m.company) + '</td><td class="c">' + won(fee) + '</td>'
-          + (A ? '<td class="c pd"><input class="ein y-num" id="dp' + m.row + '" inputmode="numeric" value="' + (+d.paid || 0) + '">' + nt + '</td><td class="c"><input class="ein" type="date" id="dd' + m.row + '" value="' + esc(d.date) + '"></td>'
+          + (A ? '<td class="c pd"><input class="ein y-num" id="dp' + m.row + '" inputmode="numeric" data-comma="1" value="' + won(+d.paid || 0) + '">' + nt + '</td><td class="c"><input class="ein" type="date" id="dd' + m.row + '" value="' + esc(d.date) + '"></td>'
                : '<td class="c pd">' + won(d.paid) + nt + '</td><td class="c">' + esc(d.date || '-') + '</td>')
           + '<td class="c"><span class="chip ' + s[1] + '">' + s[2] + '</span>' + (!A && d.full ? '<span class="sub mid-s">중간 입회</span>' : '') + '</td>' + (A ? '<td class="c nowrap act"><label class="mid" title="연회비보다 적게 내도 납부 완료로 봅니다"><input type="checkbox" id="df' + m.row + '"' + (d.full ? ' checked' : '') + '> 중간 입회</label><button type="button" class="btn line xs" data-full="' + m.row + '">완납</button><button type="button" class="btn xs" data-dsave="' + m.row + '">저장</button></td>' : '') + '</tr>'; }).join('')
         + '</tbody></table></div>' : empty('정회원이 없습니다', '회원이 승인되면 납부 현황이 나타납니다.'))
@@ -3121,6 +3133,12 @@ function yceoMembers(root, ENDPOINT, LOGO, onRole){
   const findApp = r => (D.apps || []).find(o => String(o.row) === String(r));
   const findMem = r => (D.members || []).find(o => String(o.row) === String(r));
   let qT;
+  /* 금액 칸: 입력하면 1,000 단위 쉼표 자동 */
+  root.addEventListener('input', e => {
+    const t = e.target; if (!t || !t.dataset || !t.dataset.comma) return;
+    const n = String(t.value).replace(/[^\d]/g, ''); const f = n ? (+n).toLocaleString('ko-KR') : '';
+    if (t.value !== f) { const fromEnd = t.value.length - (t.selectionEnd || 0); t.value = f; const p = Math.max(0, f.length - fromEnd); try { t.setSelectionRange(p, p); } catch (x) {} }
+  });
   root.addEventListener('input', e => {
     const id = e.target.id; if (id !== 'q-board' && id !== 'q-roster') return;
     clearTimeout(qT); qT = setTimeout(() => { if (id === 'q-board') qBoard = e.target.value.trim(); else qRoster = e.target.value.trim(); render(); const n = $('#' + id); if (n) { n.focus(); n.setSelectionRange(n.value.length, n.value.length); } }, 300);
@@ -3167,7 +3185,7 @@ function yceoMembers(root, ENDPOINT, LOGO, onRole){
     if (d.dv) { duesView = d.dv; if (d.y) duesYear = +d.y; return render(); }
     if (!adm() && d.a !== 'newpost') return;
     if (d.a === 'newpost') return editPost(null);
-    if (d.full) { $('#dp' + d.full).value = D.fee; if (!$('#dd' + d.full).value) $('#dd' + d.full).value = today(); return; }
+    if (d.full) { $('#dp' + d.full).value = won(D.fee); if (!$('#dd' + d.full).value) $('#dd' + d.full).value = today(); return; }
     if (d.pw) return showPw(findMem(d.pw));
     if (d.dsave) return run(b, { action:'dues', year:duesYear, row:+d.dsave, paid:num($('#dp' + d.dsave).value), date:$('#dd' + d.dsave).value, full: !!($('#df' + d.dsave) || {}).checked }, '회비를 저장했습니다.');
     if (d.del) { if (!b.dataset.sure2) { b.dataset.sure2 = '1'; b.textContent = '정말 삭제'; return; } return run(b, { action:d.del, kind:d.kind, id:d.id }, '삭제했습니다.'); }
