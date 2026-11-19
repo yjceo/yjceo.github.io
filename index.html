@@ -1347,12 +1347,11 @@ body.app #yceo-mo{top:0!important}
 #yceo-m .rsvp button.no:not([aria-pressed="true"]){background:#fbe5e1!important;border-color:#efc0b8!important;color:#a3362a!important}
 #yceo-m .rsvp button.maybe:not([aria-pressed="true"]){background:#fdf0d6!important;border-color:#eed39a!important;color:#86560b!important}
 #yceo-m .rsvp button:not([aria-pressed="true"]):hover{filter:brightness(.96)}
-/* PC 회비 납부내역·연도별: 이름 가운데, 회사명 들여쓰기 */
-@media (min-width:1101px){
+/* 회비 납부내역·연도별(PC·모바일): 이름 가운데, 회사명 들여쓰기 */
 #yceo-m .m-tbl.dues th:first-child,#yceo-m .m-tbl.dues td:first-child,#yceo-m .m-tbl.hist th:first-child,#yceo-m .m-tbl.hist td:first-child{text-align:center}
 #yceo-m .m-tbl.dues td:nth-child(2),#yceo-m .m-tbl.hist td:nth-child(2){padding-left:2.2em!important}
 #yceo-m .m-tbl.dues tr.grp td,#yceo-m .m-tbl.hist tr.grp td{text-align:left;padding-left:14px!important}
-}
+@media (max-width:1100px){#yceo-m .m-tbl.dues td:nth-child(2),#yceo-m .m-tbl.hist td:nth-child(2){padding-left:1.4em!important}}
 /* 찬조금 표: 일자·회사명·회원명 가운데 */
 #yceo-m .m-tbl.spon th:nth-child(-n+3),#yceo-m .m-tbl.spon td:nth-child(-n+3){text-align:center!important}
 #yceo-m .m-tbl.spon tr.tot td:first-child{text-align:left!important}
@@ -1728,7 +1727,7 @@ var DEFAULT_PW = '00000000', PW_RULE = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[~!@*#])[A-Z
     + '<div class="fp">'
     + '<div class="fp-head"><img src="' + LOGO_SRC + '" alt="YCEO"><h3>입회신청서</h3></div>'
     + '<div class="top"><div class="photo"><div class="ph" id="ya-ph">사진</div><label class="ya-photo-btn">파일 선택<input type="file" id="ya-photo" accept="image/*" hidden aria-label="사진 첨부"></label></div><div>'
-    +   '<div class="row"><div class="lb">성명</div><div class="vl"><input type="text" id="ya-name" placeholder="성명">' + att('ya-card','명함') + '</div></div>'
+    +   '<div class="row"><div class="lb">회원명</div><div class="vl"><input type="text" id="ya-name" placeholder="회원명">' + att('ya-card','명함') + '</div></div>'
     +   '<div class="row"><div class="lb">생년월일</div><div class="vl"><span class="ya-bday"><input type="text" class="short yy" id="ya-by" inputmode="numeric" maxlength="4" placeholder="년"><input type="text" class="short" id="ya-bm" inputmode="numeric" maxlength="2" placeholder="월"><input type="text" class="short" id="ya-bd" inputmode="numeric" maxlength="2" placeholder="일"></span><span class="ya-cal"><label><input type="radio" name="ya-cal" value="음력">음력</label><label><input type="radio" name="ya-cal" value="양력" checked>양력</label></span></div></div>'
     +   '<div class="row"><div class="lb">휴대폰</div><div class="split pe"><div class="vl"><input type="tel" id="ya-phone" placeholder="010-0000-0000"></div><div class="lb">이메일</div><div class="vl"><input type="email" id="ya-email" placeholder="E-Mail"></div></div></div>'
     +   '<div class="row" style="border-bottom:0"><div class="lb">집주소</div><div class="vl"><input type="hidden" id="ya-hz"><input type="text" class="ya-addr" id="ya-ha" placeholder="주소 (누르면 주소 찾기)" data-zip="ya-hz"><button type="button" class="ya-find" data-for="ya-ha">주소 찾기</button></div></div>'
@@ -1743,7 +1742,7 @@ var DEFAULT_PW = '00000000', PW_RULE = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[~!@*#])[A-Z
     + '<div class="row"><div class="lb">추 천 인</div><div class="rec"><div class="n">1</div><div class="vl"><input type="text" id="ya-r1" placeholder="추천인 1"></div><div class="n">2</div><div class="vl"><input type="text" id="ya-r2" placeholder="추천인 2"></div></div></div>'
     + '<div class="row"><div class="lb">연 회 비<small>(가입비 및 연회비)</small></div><div class="rec"><div class="vl fee"><b style="font-size:20px">600,000원</b></div><div class="n">국민</div><div class="vl" style="justify-content:center"><b>250501-04-318521</b></div></div></div>'
     + '<div class="sign"><div>위와 같이 여주시기업인협의회 회원으로 가입하고자 신청합니다.</div><div><b>' + now.getFullYear() + '년 ' + (now.getMonth()+1) + '월 ' + now.getDate() + '일</b></div>'
-    +   '<div style="display:flex;gap:8px;justify-content:center;align-items:center;flex-wrap:wrap">성 명 : <input type="text" id="ya-sign" style="flex:0 1 180px" placeholder="이름 입력"> (서명)</div>'
+    +   '<div style="display:flex;gap:8px;justify-content:center;align-items:center;flex-wrap:wrap">성 명 : <input type="text" id="ya-sign" style="flex:0 1 180px" placeholder="회원명 입력"> (서명)</div>'
     +   '<div class="sigbox"><canvas id="ya-sig" aria-label="서명란: 손가락이나 마우스로 서명"></canvas><div class="sig-row"><span>손가락이나 마우스로 서명란에 직접 서명해 주세요</span><button type="button" class="ya-btn line" id="ya-sig-clear" style="padding:4px 10px;font-size:13px">다시 쓰기</button></div></div>'
     +   '<div class="to"><span>여주시기업인협의회 <small>귀중</small></span><span class="to-r"><span class="ya-msg2" id="ya-msg2" role="status"></span><button type="button" class="ya-btn ya-save2" id="ya-submit2">저장하기</button></span></div></div>'
     + '</div>'
@@ -1869,7 +1868,7 @@ var DEFAULT_PW = '00000000', PW_RULE = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[~!@*#])[A-Z
 
   ap.addEventListener('keydown', function(e){ if (e.key === 'Enter' && e.target.tagName === 'INPUT' && e.target.type !== 'checkbox' && e.target.type !== 'radio') e.preventDefault(); });
   document.getElementById('ya-submit').addEventListener('click', function(){
-    if (!v('ya-name') || !v('ya-company') || v('ya-phone').replace(/\D/g,'').length < 10) { say('성명, 회사명, 휴대폰 번호는 꼭 입력해 주세요.', 'err'); return; }
+    if (!v('ya-name') || !v('ya-company') || v('ya-phone').replace(/\D/g,'').length < 10) { say('회원명, 회사명, 휴대폰 번호는 꼭 입력해 주세요.', 'err'); return; }
     if (!signed) { say('서명란에 서명해 주세요.', 'err'); return; }
     if (!PW_RULE.test(v('ya-pw'))) { say(PW_MSG, 'err'); return; }
     if (v('ya-pw') !== v('ya-pw2')) { say('비밀번호 확인이 일치하지 않습니다.', 'err'); return; }
@@ -2591,7 +2590,7 @@ function yceoMembers(root, ENDPOINT, LOGO, onRole){
     const ci = (f, ph) => '<input class="ein" data-f="' + f + '" value="' + esc(m[f]) + '"' + (ph ? ' placeholder="' + ph + '"' : '') + '>';
     const webA = m.web ? '<a href="' + esc(/^https?:/i.test(m.web) ? m.web : 'http://' + m.web) + '" target="_blank" rel="noopener">' + esc(m.web) + '</a>' : '-';
     const info = E
-      ? '<dl class="ce"><dt>성명</dt><dd>' + ci('name') + '</dd><dt>직책</dt><dd>' + ci('position', '예: 대표') + '</dd><dt>회사명</dt><dd>' + ci('company') + '</dd><dt>휴대폰</dt><dd>' + ci('phone') + '</dd><dt>사무실전화</dt><dd>' + ci('tel') + '</dd><dt>이메일</dt><dd>' + ci('email') + '</dd><dt>공장</dt><dd>' + ci('factoryAddr') + '</dd><dt>주생산품</dt><dd>' + ci('product') + '</dd><dt>홈페이지</dt><dd>' + ci('web', 'www.회사.co.kr') + '</dd></dl>'
+      ? '<dl class="ce"><dt>회원명</dt><dd>' + ci('name') + '</dd><dt>직책</dt><dd>' + ci('position', '예: 대표') + '</dd><dt>회사명</dt><dd>' + ci('company') + '</dd><dt>휴대폰</dt><dd>' + ci('phone') + '</dd><dt>사무실전화</dt><dd>' + ci('tel') + '</dd><dt>이메일</dt><dd>' + ci('email') + '</dd><dt>공장</dt><dd>' + ci('factoryAddr') + '</dd><dt>주생산품</dt><dd>' + ci('product') + '</dd><dt>홈페이지</dt><dd>' + ci('web', 'www.회사.co.kr') + '</dd></dl>'
         + '<div class="foot ce-foot"><span class="note">고친 내용은 입회신청서·회원명부에 함께 반영됩니다.</span><button type="button" class="btn line" data-cedit="0">취소</button><button type="button" class="btn" data-csave>저장</button></div>'
       : '<dl><dt>휴대폰</dt><dd>' + esc(m.phone || '-') + '</dd><dt>전화</dt><dd>' + esc(m.tel || '-') + '</dd><dt>이메일</dt><dd>' + esc(m.email || '-') + '</dd><dt>공장</dt><dd>' + esc(m.factoryAddr || '-') + '</dd><dt>주생산품</dt><dd>' + esc(m.product || '-') + '</dd><dt>홈페이지</dt><dd>' + webA + '</dd>' + (m.title ? '<dt>협의회</dt><dd>' + esc(m.title) + '</dd>' : '') + '</dl>'
         + (CAN ? '<div class="ce-foot"><button type="button" class="btn line sm" data-cedit="1">✏️ ' + (SELF ? '내 정보 수정' : '정보 수정') + '</button></div>' : '');
@@ -2608,7 +2607,7 @@ function yceoMembers(root, ENDPOINT, LOGO, onRole){
     const cs = mv.querySelector('[data-csave]');
     if (cs) cs.addEventListener('click', () => {
       const fields = {}; $$('.ce [data-f]', mv).forEach(i => fields[i.getAttribute('data-f')] = i.value.trim());
-      if (!fields.name || !fields.company) return note('성명과 회사명은 비울 수 없습니다.');
+      if (!fields.name || !fields.company) return note('회원명과 회사명은 비울 수 없습니다.');
       if (fields.web && !/^https?:\/\//i.test(fields.web)) fields.web = 'http://' + fields.web;
       cs.disabled = true; note('저장하는 중…');
       call(SELF ? { action:'myUpdate', fields } : { action:'update', row:m.row, fields }).then(r => {
@@ -2645,7 +2644,7 @@ function yceoMembers(root, ENDPOINT, LOGO, onRole){
     openV(top('입회신청서 <span class="chip ' + st + '">' + esc(o.status) + '</span>' + (E ? ' <span style="font-size:14px;color:var(--accent)">수정 중</span>' : ''), '접수 ' + esc(o.at))
       + '<div class="fp"><div class="fp-head"><img src="' + LOGO + '" alt="YCEO"><h3>입회신청서</h3></div>'
       + '<div class="top"><div class="photo"><div class="ph" id="mv-photo">사진 없음</div></div><div>'
-      +   '<div class="row"><div class="lb">성명</div><div class="vl">' + ed('name', '<b>' + esc(o.name) + '</b>') + docBtn(o,'card','명함') + '</div></div>'
+      +   '<div class="row"><div class="lb">회원명</div><div class="vl">' + ed('name', '<b>' + esc(o.name) + '</b>') + docBtn(o,'card','명함') + '</div></div>'
       +   '<div class="row"><div class="lb">생년월일</div><div class="vl">' + (E ? ed('birth','',140) + '<span class="z">예: 1968-3-12</span>' + ed('cal','',80) : (b[0] ? esc(b[0]) + '년 ' + esc(b[1]) + '월 ' + esc(b[2]) + '일 (' + esc(o.cal) + ')' : '-')) + '</div></div>'
       +   '<div class="row"><div class="lb">휴대폰</div><div class="split pe"><div class="vl">' + tx('phone') + '</div><div class="lb">이메일</div><div class="vl">' + tx('email') + '</div></div></div>'
       +   '<div class="row" style="border-bottom:0"><div class="lb">집주소</div><div class="vl">' + adr('homeZip', 'homeAddr') + '</div></div>'
@@ -2680,7 +2679,7 @@ function yceoMembers(root, ENDPOINT, LOGO, onRole){
     const sv = mv.querySelector('[data-save]');
     if (sv) sv.addEventListener('click', () => {
       const fields = {}; $$('[data-f]', mv).forEach(i => fields[i.getAttribute('data-f')] = i.value.trim());
-      if (!fields.name || !fields.company) return note('성명과 회사명은 비울 수 없습니다.');
+      if (!fields.name || !fields.company) return note('회원명과 회사명은 비울 수 없습니다.');
       sv.disabled = true; note('저장하는 중…');
       call(SELF ? { action:'myUpdate', fields } : { action:'update', row:o.row, fields }).then(r => { if (!r.ok) { sv.disabled = false; return note(r.error); } Object.assign(o, fields); const mm = findMem(o.row); if (mm) Object.assign(mm, fields); showApp(o, false); load(true); });
     });
@@ -2756,7 +2755,7 @@ function yceoMembers(root, ENDPOINT, LOGO, onRole){
       + '<div class="m-forgot" id="m-fg" hidden>'
       +   '<dl><dt>아이디</dt><dd>입회신청서에 적은 <b>휴대폰 번호</b>가 아이디입니다. <b>- 없이 숫자만</b> 입력하세요. 번호가 바뀌었다면 사무국에 알려 주세요.</dd>'
       +   '<dt>비밀번호</dt><dd>보안을 위해 비밀번호는 누구도 볼 수 없습니다. 아래로 요청하시면 사무국이 <b>처음 비밀번호로 초기화</b>한 뒤 알려 드립니다. 로그인한 뒤 [비밀번호 변경]으로 새 비밀번호를 정하세요.</dd></dl>'
-      +   '<div class="fg-form"><input class="m-inp" id="fg-name" placeholder="성함"><input class="m-inp" id="fg-ph" type="tel" inputmode="numeric" placeholder="휴대폰 번호 (숫자만)"><button type="button" class="btn sm" id="fg-send">초기화 요청 보내기</button></div>'
+      +   '<div class="fg-form"><input class="m-inp" id="fg-name" placeholder="회원명"><input class="m-inp" id="fg-ph" type="tel" inputmode="numeric" placeholder="휴대폰 번호 (숫자만)"><button type="button" class="btn sm" id="fg-send">초기화 요청 보내기</button></div>'
       +   '<p class="fg-msg" id="fg-msg" role="status"></p>'
       +   '<p class="hint">급하시면 사무국 <b>010-8781-0634</b> 으로 전화 주세요.</p>'
       + '</div>'
@@ -2764,7 +2763,7 @@ function yceoMembers(root, ENDPOINT, LOGO, onRole){
     $('#m-fg-open').addEventListener('click', () => { const f = $('#m-fg'), o = f.hidden; f.hidden = !o; $('#m-fg-open').setAttribute('aria-expanded', String(o)); if (o) { const p = $('#m-ph').value.trim(); if (p) $('#fg-ph').value = p; $('#fg-name').focus(); } });
     $('#fg-send').addEventListener('click', function(){
       const nm = $('#fg-name').value.trim(), ph = $('#fg-ph').value.trim(), msg = $('#fg-msg'), btn = this;
-      if (!nm || ph.replace(/\D/g, '').length < 9) { msg.textContent = '성함과 휴대폰 번호를 정확히 입력해 주세요.'; return; }
+      if (!nm || ph.replace(/\D/g, '').length < 9) { msg.textContent = '회원명과 휴대폰 번호를 정확히 입력해 주세요.'; return; }
       btn.disabled = true; msg.textContent = '보내는 중…';
       const body = { action:'inquiry', name:nm, phone:ph, company:'', email:'', msg:'[비밀번호 초기화 요청] 회원 로그인 비밀번호를 잊었습니다. 초기화해 주세요.', agree:true };
       (DEMO ? Promise.resolve({ ok:true }) : fetch(ENDPOINT, { method:'POST', headers:{ 'Content-Type':'text/plain;charset=utf-8' }, body: JSON.stringify(body) }).then(r => r.json()))
@@ -2917,10 +2916,10 @@ function yceoMembers(root, ENDPOINT, LOGO, onRole){
     const all = (D.members || []), list = all.filter(m => !qRoster || [m.name, m.company, m.product, m.ind, m.position, m.title].join(' ').indexOf(qRoster) >= 0)
       .sort(byOfficer);
     const nOff = list.filter(m => titleRank(m) < 99).length, grp = (t, n) => '<tr class="grp"><td colspan="5">' + t + ' <span>' + n + '명</span></td></tr>';
-    return bar('회원명부', '이름이나 회사명을 누르면 명함이 보입니다. 정회원 ' + all.length + '명')
-      + '<div class="m-tool"><input class="m-inp" id="q-roster" type="search" placeholder="이름, 회사명, 생산품으로 검색" value="' + esc(qRoster) + '"></div>'
+    return bar('회원명부', '회원명이나 회사명을 누르면 명함이 보입니다. 정회원 ' + all.length + '명')
+      + '<div class="m-tool"><input class="m-inp" id="q-roster" type="search" placeholder="회원명, 회사명, 생산품으로 검색" value="' + esc(qRoster) + '"></div>'
       + '<div class="legend">' + (adm() ? '<span>📝 신청서</span>' : '') + '<span>🏢 사업자등록증</span><span>🏭 공장등록증</span><span>📇 명함</span>' + (adm() ? '<span>🔑 비밀번호 초기화</span>' : '') + '</div>'
-      + (list.length ? '<div class="m-tbl tight roster"><table><thead><tr><th>이름 / 직책</th><th>회사</th><th>주생산품</th><th>연락처</th><th>관리</th></tr></thead><tbody>'
+      + (list.length ? '<div class="m-tbl tight roster"><table><thead><tr><th>회원명 / 직책</th><th>회사명</th><th>주생산품</th><th>연락처</th><th>관리</th></tr></thead><tbody>'
         + list.map((m, i) => (i === 0 && nOff ? grp('임원진', nOff) : '') + (i === nOff && nOff && i < list.length ? grp('일반회원', list.length - nOff) : '') + '<tr' + (m.mine ? ' class="mine"' : '') + '><td><button type="button" class="lk" data-card="' + m.row + '">' + esc(m.name) + '</button>' + (m.position ? '<span class="pos">' + esc(m.position) + '</span>' : '') + (m.title ? ' <span class="chip role">' + esc(m.title) + '</span>' : '') + (m.golf && (adm() || (D.me && D.me.golf)) ? ' <span class="chip golf">골프</span>' : '') + (isNew('roster', toTime(m.approvedAt)) ? NEW : '') + '</td>'
           + '<td class="nowrap"><button type="button" class="lk" data-card="' + m.row + '">' + esc(m.company) + '</button></td><td class="wrap prod">' + esc(m.product) + '</td><td class="nowrap ph">' + esc(m.phone || '-') + '</td><td>' + icons(m) + '</td></tr>').join('')
         + '</tbody></table></div>' : empty(all.length ? '검색 결과가 없습니다' : '아직 정회원이 없습니다', all.length ? '' : '입회신청 관리에서 승인하면 이곳에 자동으로 올라옵니다.'));
@@ -2981,7 +2980,7 @@ function yceoMembers(root, ENDPOINT, LOGO, onRole){
       + '<div class="sum"><span>찬조금</span><b>' + won(spon) + '원</b><span>' + spl.length + '건</span></div>'
       + '<div class="sum"><span>잔액 (' + (duesYear === cy ? (bk.last ? bk.last + ' 기준' : '현재') : duesYear + '년 말 기준') + ')</span><b>' + won(bk.end) + '원</b><span>입금 ' + won(bk.inn) + '<br>출금 ' + won(bk.out) + '</span></div></div>'
       + (duesSec === 'spon' ? (''
-      + (A ? '<div class="admin-box row-add spon"><input class="ein" type="date" id="sn-date"><select class="ein" id="sn-who"><option value="">업체 선택</option>' + (D.members || []).concat(D.former || []).slice().sort((a,b) => String(a.company).localeCompare(String(b.company), 'ko')).map(m => '<option value="' + m.row + '">' + esc(m.company) + ' · ' + esc(m.name) + '</option>').join('') + '<option value="0">직접 입력 (외부)</option></select><input class="ein" id="sn-co" placeholder="외부 업체·성명 (직접 입력 시)"><input class="ein" id="sn-amt" inputmode="numeric" placeholder="금액"><input class="ein" id="sn-memo" placeholder="메모"><button type="button" class="btn sm" data-a="snadd">추가</button></div>' : '')
+      + (A ? '<div class="admin-box row-add spon"><input class="ein" type="date" id="sn-date"><select class="ein" id="sn-who"><option value="">회사명 선택</option>' + (D.members || []).concat(D.former || []).slice().sort((a,b) => String(a.company).localeCompare(String(b.company), 'ko')).map(m => '<option value="' + m.row + '">' + esc(m.company) + ' · ' + esc(m.name) + '</option>').join('') + '<option value="0">직접 입력 (외부)</option></select><input class="ein" id="sn-co" placeholder="외부 회사명·회원명 (직접 입력 시)"><input class="ein" id="sn-amt" inputmode="numeric" placeholder="금액"><input class="ein" id="sn-memo" placeholder="메모"><button type="button" class="btn sm" data-a="snadd">추가</button></div>' : '')
       + (spl.length ? '<div class="m-tbl tight spon cmp"><table><thead><tr><th>일자</th><th>회사명</th><th>회원명</th><th class="y-num">금액</th><th>메모</th>' + (A ? '<th></th>' : '') + '</tr></thead><tbody>'
         + spl.slice().sort((a,b) => String(b.date).localeCompare(String(a.date))).map(x => '<tr><td>' + esc(x.date || '-') + '</td><td class="co">' + esc(x.company) + (isNew('dues', x.createdAt) ? NEW : '') + (x.memo ? '<span class="sub mob-memo">' + esc(x.memo) + '</span>' : '') + '</td><td>' + esc(x.name) + '</td><td class="y-num">' + won(x.amount) + '원</td><td>' + esc(x.memo || '') + '</td>' + (A ? '<td><button type="button" class="btn line sm" data-del="sponDel" data-id="' + esc(x.id) + '">삭제</button></td>' : '') + '</tr>').join('')
         + '<tr class="tot"><td colspan="3"><b>합계</b></td><td class="y-num"><b>' + won(spon) + '원</b></td><td colspan="' + (A ? 2 : 1) + '"></td></tr></tbody></table></div>' : empty(duesYear + '년 찬조금 내역이 없습니다'))
@@ -2990,7 +2989,7 @@ function yceoMembers(root, ENDPOINT, LOGO, onRole){
       + ledger('club', duesYear)
       ) : (''
       + '<div class="m-tool"><select class="m-inp" id="dues-f"><option value="">전체 (' + all.length + '명)</option><option value="paid"' + (duesF === 'paid' ? ' selected' : '') + '>납부 완료</option><option value="part"' + (duesF === 'part' ? ' selected' : '') + '>분납</option><option value="unpaid"' + (duesF === 'unpaid' ? ' selected' : '') + '>미납</option></select></div>'
-      + (all.length ? '<div class="m-tbl tight dues cmp"><table><thead><tr><th>이름</th><th>회사명</th><th class="c">연회비</th><th class="c">납부액</th><th class="c">납부일</th><th class="c">상태</th>' + (A ? '<th class="c">관리</th>' : '') + '</tr></thead><tbody>'
+      + (all.length ? '<div class="m-tbl tight dues cmp"><table><thead><tr><th>회원명</th><th>회사명</th><th class="c">연회비</th><th class="c">납부액</th><th class="c">납부일</th><th class="c">상태</th>' + (A ? '<th class="c">관리</th>' : '') + '</tr></thead><tbody>'
         + list.map(m => { const d = duesOf(m.row), s = dst(+d.paid || 0, d); const nt = d.note ? '<span class="sub dnote" title="' + esc(d.note) + '">※ ' + esc(d.note) + '</span>' : '';
           return '<tr' + (m.former ? ' class="fmr"' : '') + '><td><b>' + esc(m.name) + '</b>' + (m.former ? ' ' + FMR : '') + (isNew('dues', d.updatedAt) ? NEW : '') + '</td><td class="co">' + esc(m.company) + '</td><td class="c">' + won(fee) + '</td>'
           + (A ? '<td class="c pd"><input class="ein y-num" id="dp' + m.row + '" inputmode="numeric" data-comma="1" value="' + won(+d.paid || 0) + '">' + nt + '</td><td class="c"><input class="ein" type="date" id="dd' + m.row + '" value="' + esc(d.date) + '"></td>'
@@ -3029,7 +3028,7 @@ function yceoMembers(root, ENDPOINT, LOGO, onRole){
         '<div class="m-right"><div class="seg"><button type="button" data-dv="year" data-y="' + cy + '" aria-pressed="false">' + cy + '년</button><button type="button" data-dv="hist" aria-pressed="true">연도별 내역</button></div></div>')
       + '<div class="m-tbl tight"><table><thead><tr><th>연도</th><th class="y-num">대상 회원</th><th class="y-num">걷힌 회비</th><th class="y-num">납부율</th><th class="y-num">완납</th><th class="y-num">미납</th><th class="y-num">찬조금</th><th class="y-num">통장 입금</th><th class="y-num">통장 출금</th><th class="y-num">통장 잔액</th></tr></thead><tbody>' + rows + '</tbody></table></div>'
       + '<h3 class="h-sub">회원별 연도 납부 현황</h3>'
-      + (all.length ? '<div class="m-tbl tight hist cmp"><table><thead><tr><th>이름</th><th>회사명</th>' + years.map(y => '<th class="c">' + y + '</th>').join('') + '</tr></thead><tbody>'
+      + (all.length ? '<div class="m-tbl tight hist cmp"><table><thead><tr><th>회원명</th><th>회사명</th>' + years.map(y => '<th class="c">' + y + '</th>').join('') + '</tr></thead><tbody>'
         + all.map(m => '<tr' + (m.former ? ' class="fmr"' : '') + '><td><b>' + esc(m.name) + '</b>' + (m.former ? ' ' + FMR : '') + '</td><td class="co">' + esc(m.company) + '</td>' + years.map(y => cell(y, m)).join('') + '</tr>').join('')
         + '</tbody></table></div>' : empty('정회원이 없습니다'));
   }
@@ -3104,7 +3103,7 @@ function yceoMembers(root, ENDPOINT, LOGO, onRole){
     if (!(adm() || (D.me && D.me.golf))) return bar('골프 회원', '골프모임 회원 명단입니다.') + empty('골프회원만 볼 수 있습니다', '골프모임 가입은 사무국에 말씀해 주세요.');
     const L = (D.members || []).filter(m => m.golf).sort(byOfficer);
     const tel = p => p ? '<a class="gm-tel" href="tel:' + esc(String(p).replace(/[^0-9]/g, '')) + '">' + esc(p) + '</a>' : '<span class="gm-tel none">연락처 없음</span>';
-    return bar('골프 회원', '골프모임에 가입한 회원입니다. ' + (adm() ? '회원명부에서 이름을 누르고 [골프회원]에 체크하면 추가·해제됩니다.' : '가입은 사무국에 말씀해 주세요.'))
+    return bar('골프 회원', '골프모임에 가입한 회원입니다. ' + (adm() ? '회원명부에서 회원명을 누르고 [골프회원]에 체크하면 추가·해제됩니다.' : '가입은 사무국에 말씀해 주세요.'))
       + (L.length ? '<div class="gm-head"><div class="gm-count"><b>' + L.length + '</b><span>명</span></div><div class="gm-names">' + L.map(m => '<span>' + esc(m.name) + '</span>').join('') + '</div></div>'
         + '<div class="gm-grid">' + L.map((m, i) => '<div class="gm-card"><span class="gm-no">' + String(i + 1).padStart(2, '0') + '</span>'
           + '<div class="gm-nm"><b>' + esc(m.name) + '</b>' + (m.title ? '<em>' + esc(m.title) + '</em>' : '') + '</div>'
@@ -3116,7 +3115,7 @@ function yceoMembers(root, ENDPOINT, LOGO, onRole){
     const pend = (D.apps || []).filter(o => o.status === '접수').length;
     return bar('입회신청 관리', '서류의 📝 아이콘으로 신청서를 확인한 뒤, 상태 칸의 [승인] 버튼을 누르면 정회원이 되어 회원명부에 자동 등록됩니다. 대기 ' + pend + '건',
         '<select class="m-inp" id="app-f" style="flex:0 1 170px"><option value="">전체</option><option value="접수"' + (appF === '접수' ? ' selected' : '') + '>접수 (대기)</option><option value="정회원"' + (appF === '정회원' ? ' selected' : '') + '>정회원</option><option value="반려"' + (appF === '반려' ? ' selected' : '') + '>반려</option></select>')
-      + (list.length ? '<div class="m-tbl apps"><table><thead><tr><th>접수일</th><th>이름</th><th>회사명</th><th>연락처</th><th>추천인</th><th>서류</th><th>상태 · 처리</th></tr></thead><tbody>'
+      + (list.length ? '<div class="m-tbl apps"><table><thead><tr><th>접수일</th><th>회원명</th><th>회사명</th><th>연락처</th><th>추천인</th><th>서류</th><th>상태 · 처리</th></tr></thead><tbody>'
         + list.map(o => '<tr><td>' + esc(String(o.at || '').slice(0, 10)) + (o.status === '접수' ? NEW : '') + '</td><td><b>' + esc(o.name) + '</b></td><td>' + esc(o.company) + '</td><td>' + esc(o.phone) + '</td><td>' + esc(o.rec1) + (o.rec2 ? ', ' + esc(o.rec2) : '') + '</td>'
           + '<td><div class="ico"><button type="button" title="신청서" aria-label="신청서 보기" data-app="' + o.row + '">📝</button><button type="button" title="사업자등록증" data-file="biz" data-row="' + o.row + '"' + (o.biz ? '' : ' disabled') + '>🏢</button><button type="button" title="공장등록증" data-file="fac" data-row="' + o.row + '"' + (o.fac ? '' : ' disabled') + '>🏭</button><button type="button" title="명함" data-file="card" data-row="' + o.row + '"' + (o.card ? '' : ' disabled') + '>📇</button></div></td>'
           + '<td class="st" data-strow="' + o.row + '">' + stCell(o) + '</td></tr>').join('')
@@ -3130,7 +3129,7 @@ function yceoMembers(root, ENDPOINT, LOGO, onRole){
     const list = all.filter(o => !inqF || (inqF === '신규' ? o.status !== '처리완료' : o.status === '처리완료'));
     return bar('문의함', '홈페이지 [문의하기]로 들어온 문의입니다. 연락을 마쳤으면 [처리 완료]를 눌러 주세요. 미처리 ' + inqN() + '건',
         '<select class="m-inp" id="inq-f" style="flex:0 1 170px"><option value="">전체</option><option value="신규"' + (inqF === '신규' ? ' selected' : '') + '>미처리</option><option value="완료"' + (inqF === '완료' ? ' selected' : '') + '>처리 완료</option></select>')
-      + (list.length ? '<div class="m-tbl inq cmp"><table><thead><tr><th>접수 일시</th><th>성함 · 회사</th><th>연락처</th><th>문의 내용</th><th>상태 · 처리</th></tr></thead><tbody>'
+      + (list.length ? '<div class="m-tbl inq cmp"><table><thead><tr><th>접수 일시</th><th>성함 · 회사명</th><th>연락처</th><th>문의 내용</th><th>상태 · 처리</th></tr></thead><tbody>'
         + list.map(o => '<tr><td>' + esc(dt(o.createdAt)) + (o.status !== '처리완료' ? NEW : '') + '</td><td><b>' + esc(o.name) + '</b><span class="sub">' + esc(o.company) + '</span></td>'
           + '<td><a href="tel:' + esc(String(o.phone || '').replace(/[^0-9]/g, '')) + '">' + esc(o.phone) + '</a>' + (o.email ? '<span class="sub">' + esc(o.email) + '</span>' : '') + '</td>'
           + '<td class="msg">' + esc(o.msg) + '</td>'
@@ -3214,9 +3213,9 @@ function yceoMembers(root, ENDPOINT, LOGO, onRole){
       return run(b, { action:'bankAdd', item:{ acct:a, date:val('bk-date-' + a), desc:val('bk-desc-' + a), cat:val('bk-cat-' + a), inn: k === '입금' ? amt : 0, out: k === '출금' ? amt : 0 } }, '입출금 내역을 추가했습니다.');
     }
     if (d.a === 'snadd') {
-      const w = val('sn-who'), amt = num(val('sn-amt')); if (w === '' || !amt) return flash('업체와 금액을 입력하세요.');
+      const w = val('sn-who'), amt = num(val('sn-amt')); if (w === '' || !amt) return flash('회사명과 금액을 입력하세요.');
       const m = (D.members || []).concat(D.former || []).find(x => String(x.row) === w);
-      if (!m && !val('sn-co')) return flash('외부 업체·성명을 입력하세요.');
+      if (!m && !val('sn-co')) return flash('외부 회사명·회원명을 입력하세요.');
       return run(b, { action:'sponAdd', item:{ year:duesYear, date:val('sn-date'), row: m ? m.row : 0, company: m ? m.company : val('sn-co'), name: m ? m.name : '', amount:amt, memo:val('sn-memo') } }, '찬조금을 추가했습니다.');
     }
     if (d.a === 'spadd') { if (!val('sp-date') || !val('sp-desc')) return flash('일자와 내용을 입력하세요.'); return run(b, { action:'spendAdd', item:{ date:val('sp-date'), cat:val('sp-cat'), desc:val('sp-desc'), amount:num(val('sp-amt')) } }, '사용 내역을 추가했습니다.'); }
