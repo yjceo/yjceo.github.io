@@ -1355,7 +1355,11 @@ body.app #yceo-mo{top:0!important}
 /* 찬조금 표: 일자·회사명·회원명 가운데 */
 #yceo-m .m-tbl.spon th:nth-child(-n+3),#yceo-m .m-tbl.spon td:nth-child(-n+3){text-align:center!important}
 #yceo-m .m-tbl.spon tr.tot td:first-child{text-align:left!important}
-#yceo-m .m-tbl.spon tr.tot td.y-num,#yceo-m .m-tbl.bank tr.tot td.y-num{text-align:right!important}
+#yceo-m .m-tbl.bank tr.tot td.y-num{text-align:right!important}
+/* 찬조금 금액: 합계와 같이 칸 가운데 */
+#yceo-m .m-tbl.spon td.y-num{text-align:right!important;padding-right:44px!important}
+#yceo-m .m-tbl.spon th.y-num{text-align:center!important}
+@media (max-width:1100px){#yceo-m .m-tbl.spon td.y-num{padding-right:8px!important}}
 /* PC 입출금내역: 일자·분류 가운데 */
 @media (min-width:1101px){
 #yceo-m .m-tbl.bank th:nth-child(1),#yceo-m .m-tbl.bank td:nth-child(1),#yceo-m .m-tbl.bank th:nth-child(3),#yceo-m .m-tbl.bank td:nth-child(3){text-align:center!important}
