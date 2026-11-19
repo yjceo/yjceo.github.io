@@ -1311,6 +1311,25 @@ body.app #yceo-mo{top:0!important}
   #yceo-m .m-tbl.spon td .mob-memo{display:block;white-space:normal!important;font-size:11.5px;color:var(--muted);margin-top:2px;line-height:1.35}
   #yceo-m .m-tbl.spon .btn{padding:3px 7px!important;font-size:12px!important;white-space:nowrap}
 }
+/* 회비 납부내역: 제목·내용 가운데 맞춤 · 한 줄 · 관리 버튼 작게 */
+#yceo-m .m-tbl.dues th.c,#yceo-m .m-tbl.dues td.c{text-align:center!important}
+#yceo-m .m-tbl.dues td{white-space:nowrap;vertical-align:middle}
+#yceo-m .m-tbl.dues td.pd .dnote{margin:2px auto 0;text-align:center;width:auto;max-width:170px}
+#yceo-m .m-tbl.dues input.y-num{text-align:right}
+#yceo-m .m-tbl.dues td.act{display:table-cell}
+#yceo-m .m-tbl.dues td.act > *{vertical-align:middle}
+#yceo-m .m-tbl.dues label.mid{display:inline-flex;margin:0 6px 0 0;font-size:11.5px;gap:3px}
+#yceo-m .m-tbl.dues label.mid input{width:13px;height:13px}
+#yceo-m .m-tbl.dues td.act .btn.xs{padding:2px 7px!important;font-size:11.5px!important;margin-left:3px;border-radius:5px!important}
+#yceo-m .m-tbl.dues .mid-s{display:inline;margin-left:5px;font-size:12px}
+#yceo-m .m-tbl.dues td.pd .dnote{display:block;white-space:normal!important;max-width:130px;font-size:11.5px}
+@media (max-width:1100px){
+  #yceo-m .m-tbl.dues th,#yceo-m .m-tbl.dues td{padding:6px 4px}
+  #yceo-m .m-tbl.dues label.mid{font-size:11px;margin-right:3px}
+  #yceo-m .m-tbl.dues td.act .btn.xs{padding:2px 5px!important;margin-left:2px}
+  #yceo-m .m-tbl.dues input.y-num{width:68px}
+  #yceo-m .m-tbl.dues input[type=date]{width:108px}
+}
 /* 첫 화면: 알파 셋 인사 */
 #yceo-walk{position:fixed;top:0;left:0;right:0;bottom:0;z-index:2147483060;display:flex;align-items:center;justify-content:center;cursor:pointer;background:radial-gradient(ellipse at 50% 45%,#ffffff 0%,#f3f8f5 55%,#e6efea 100%);opacity:1;transition:opacity 1.4s ease;font-family:"Noto Sans KR","Apple SD Gothic Neo",sans-serif}
 #yceo-walk.out{opacity:0;pointer-events:none}
@@ -2877,7 +2896,7 @@ function yceoMembers(root, ENDPOINT, LOGO, onRole){
   }
   const duesOf = row => (D.dues || []).find(d => d.id === duesYear + '_' + row) || { paid:0, date:'' };
   /* 중간 입회(full): 낸 금액이 연회비보다 적어도 납부 완료로 봄 */
-  const dst = (p, d) => p >= D.fee || (d && d.full && p > 0) ? ['paid','ok','납부 완료'] : p > 0 ? ['part','warn','일부 납부'] : ['unpaid','bad','미납'];
+  const dst = (p, d) => p >= D.fee || (d && d.full && p > 0) ? ['paid','ok','납부 완료'] : p > 0 ? ['part','warn','분납'] : ['unpaid','bad','미납'];
   const due = d => d && d.full && +d.paid > 0 ? +d.paid : D.fee;   // 그해 내야 할 금액
   /* 해당 연도 대상 회원: 가입 연도(첫 납부 연도) 이후 정회원 + 그해 기록이 있는 이전 회원 */
   const yOf = s => { const m = /^(\d{4})/.exec(String(s || '')); return m ? +m[1] : 0; };
@@ -2929,7 +2948,7 @@ function yceoMembers(root, ENDPOINT, LOGO, onRole){
       + '<div class="summary sec-' + duesSec + '"><div class="sum"><span>' + duesYear + '년 걷힌 회비</span><b>' + won(got) + '원</b><div class="meter"><i style="width:' + (total ? got/total*100 : 0) + '%"></i></div></div>'
       + '<div class="sum"><span>납부율</span><b>' + (total ? Math.round(got/total*100) : 0) + '%</b><span>연회비 ' + won(fee) + '원</span></div>'
       + '<div class="sum"><span>찬조금</span><b>' + won(spon) + '원</b><span>' + spl.length + '건</span></div>'
-      + '<div class="sum"><span>통장 잔액 (' + (duesYear === cy ? (bk.last ? bk.last + ' 기준' : '현재') : duesYear + '년 말 기준') + ')</span><b>' + won(bk.end) + '원</b><span>입금 ' + won(bk.inn) + '<br>출금 ' + won(bk.out) + '</span></div></div>'
+      + '<div class="sum"><span>잔액 (' + (duesYear === cy ? (bk.last ? bk.last + ' 기준' : '현재') : duesYear + '년 말 기준') + ')</span><b>' + won(bk.end) + '원</b><span>입금 ' + won(bk.inn) + '<br>출금 ' + won(bk.out) + '</span></div></div>'
       + (duesSec === 'spon' ? (''
       + (A ? '<div class="admin-box row-add spon"><input class="ein" type="date" id="sn-date"><select class="ein" id="sn-who"><option value="">업체 선택</option>' + (D.members || []).concat(D.former || []).slice().sort((a,b) => String(a.company).localeCompare(String(b.company), 'ko')).map(m => '<option value="' + m.row + '">' + esc(m.company) + ' · ' + esc(m.name) + '</option>').join('') + '<option value="0">직접 입력 (외부)</option></select><input class="ein" id="sn-co" placeholder="외부 업체·성명 (직접 입력 시)"><input class="ein" id="sn-amt" inputmode="numeric" placeholder="금액"><input class="ein" id="sn-memo" placeholder="메모"><button type="button" class="btn sm" data-a="snadd">추가</button></div>' : '')
       + (spl.length ? '<div class="m-tbl tight spon cmp"><table><thead><tr><th>일자</th><th>업체명</th><th>성명</th><th class="y-num">금액</th><th>메모</th>' + (A ? '<th></th>' : '') + '</tr></thead><tbody>'
@@ -2939,13 +2958,13 @@ function yceoMembers(root, ENDPOINT, LOGO, onRole){
       + '<p class="dsec-note">정기모임 통장(국민 250501-04-318521) 기준 · 0원에서 시작한 누적 잔액</p>'
       + ledger('club', duesYear)
       ) : (''
-      + '<div class="m-tool"><select class="m-inp" id="dues-f"><option value="">전체 (' + all.length + '명)</option><option value="paid"' + (duesF === 'paid' ? ' selected' : '') + '>납부 완료</option><option value="part"' + (duesF === 'part' ? ' selected' : '') + '>일부 납부</option><option value="unpaid"' + (duesF === 'unpaid' ? ' selected' : '') + '>미납</option></select></div>'
-      + (all.length ? '<div class="m-tbl tight dues cmp"><table><thead><tr><th>이름</th><th>업체명</th><th class="y-num">연회비</th><th class="y-num">납부액</th><th>납부일</th><th>상태</th>' + (A ? '<th></th>' : '') + '</tr></thead><tbody>'
+      + '<div class="m-tool"><select class="m-inp" id="dues-f"><option value="">전체 (' + all.length + '명)</option><option value="paid"' + (duesF === 'paid' ? ' selected' : '') + '>납부 완료</option><option value="part"' + (duesF === 'part' ? ' selected' : '') + '>분납</option><option value="unpaid"' + (duesF === 'unpaid' ? ' selected' : '') + '>미납</option></select></div>'
+      + (all.length ? '<div class="m-tbl tight dues cmp"><table><thead><tr><th>이름</th><th>업체명</th><th class="c">연회비</th><th class="c">납부액</th><th class="c">납부일</th><th class="c">상태</th>' + (A ? '<th class="c">관리</th>' : '') + '</tr></thead><tbody>'
         + list.map(m => { const d = duesOf(m.row), s = dst(+d.paid || 0, d); const nt = d.note ? '<span class="sub dnote" title="' + esc(d.note) + '">※ ' + esc(d.note) + '</span>' : '';
-          return '<tr' + (m.former ? ' class="fmr"' : '') + '><td><b>' + esc(m.name) + '</b>' + (m.former ? ' ' + FMR : '') + (isNew('dues', d.updatedAt) ? NEW : '') + '</td><td class="co">' + esc(m.company) + '</td><td class="y-num">' + won(fee) + '</td>'
-          + (A ? '<td class="y-num"><input class="ein y-num" id="dp' + m.row + '" inputmode="numeric" value="' + (+d.paid || 0) + '">' + nt + '</td><td><input class="ein" type="date" id="dd' + m.row + '" value="' + esc(d.date) + '"></td>'
-               : '<td class="y-num">' + won(d.paid) + nt + '</td><td>' + esc(d.date || '-') + '</td>')
-          + '<td><span class="chip ' + s[1] + '">' + s[2] + '</span>' + (A ? '<label class="mid" title="연회비보다 적게 내도 납부 완료로 봅니다"><input type="checkbox" id="df' + m.row + '"' + (d.full ? ' checked' : '') + '> 중간 입회</label>' : d.full ? '<span class="sub">중간 입회</span>' : '') + '</td>' + (A ? '<td class="nowrap"><button type="button" class="btn line xs" data-full="' + m.row + '">완납</button> <button type="button" class="btn xs" data-dsave="' + m.row + '">저장</button></td>' : '') + '</tr>'; }).join('')
+          return '<tr' + (m.former ? ' class="fmr"' : '') + '><td><b>' + esc(m.name) + '</b>' + (m.former ? ' ' + FMR : '') + (isNew('dues', d.updatedAt) ? NEW : '') + '</td><td class="co">' + esc(m.company) + '</td><td class="c">' + won(fee) + '</td>'
+          + (A ? '<td class="c pd"><input class="ein y-num" id="dp' + m.row + '" inputmode="numeric" value="' + (+d.paid || 0) + '">' + nt + '</td><td class="c"><input class="ein" type="date" id="dd' + m.row + '" value="' + esc(d.date) + '"></td>'
+               : '<td class="c pd">' + won(d.paid) + nt + '</td><td class="c">' + esc(d.date || '-') + '</td>')
+          + '<td class="c"><span class="chip ' + s[1] + '">' + s[2] + '</span>' + (!A && d.full ? '<span class="sub mid-s">중간 입회</span>' : '') + '</td>' + (A ? '<td class="c nowrap act"><label class="mid" title="연회비보다 적게 내도 납부 완료로 봅니다"><input type="checkbox" id="df' + m.row + '"' + (d.full ? ' checked' : '') + '> 중간 입회</label><button type="button" class="btn line xs" data-full="' + m.row + '">완납</button><button type="button" class="btn xs" data-dsave="' + m.row + '">저장</button></td>' : '') + '</tr>'; }).join('')
         + '</tbody></table></div>' : empty('정회원이 없습니다', '회원이 승인되면 납부 현황이 나타납니다.'))
       ));
   }
