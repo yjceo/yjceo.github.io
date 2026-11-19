@@ -1262,11 +1262,40 @@ body.app #yceo-mo{top:0!important}
 /* 회원명부: 이름·회사·휴대폰은 내용만큼, 주생산품이 남는 폭을 쓰고 넘치면 줄바꿈 */
 #yceo-m .m-tbl.roster td.ph{width:1%;font-variant-numeric:tabular-nums}
 #yceo-m .m-tbl.roster td.prod{width:auto;min-width:110px;word-break:keep-all;line-height:1.45}
-@media (max-width:900px){#yceo-m .m-tbl.roster td.prod{min-width:210px}}
+
 #yceo-m .m-tbl.roster td:first-child,#yceo-m .m-tbl.roster td:nth-child(2),#yceo-m .m-tbl.roster td:last-child{width:1%}
 #yceo-m .m-tbl .ico{gap:4px;flex-wrap:nowrap}
 #yceo-m .m-tbl .ico button,#yceo-m .m-tbl.tight .ico button{width:28px;height:28px;font-size:14px;border-radius:7px}
 #yceo-m .m-tbl .ico button.up i{width:13px;height:13px;font-size:10px;line-height:13px;right:-3px;bottom:-3px}
+/* 표 공통: 더 촘촘하게 · 제목 한 줄 · 가로 스크롤 최소화 */
+#yceo-m .m-tbl th{white-space:nowrap}
+#yceo-m .m-tbl th,#yceo-m .m-tbl td{padding:7px 8px}
+#yceo-m .m-tbl .ico{gap:3px}
+#yceo-m .m-tbl .ico button,#yceo-m .m-tbl.tight .ico button{width:24px;height:24px;font-size:12px;border-radius:6px}
+#yceo-m .m-tbl .ico button.up i{width:11px;height:11px;font-size:9px;line-height:11px;right:-3px;bottom:-3px}
+#yceo-m .m-tbl.roster .chip{font-size:12px;padding:1px 7px}
+#yceo-m .m-tbl.roster .pos{margin-left:5px}
+#yceo-m .m-tbl.dues input.y-num{width:75px}
+#yceo-m .m-tbl.dues input[type=date]{width:112px;font-size:13px;padding:3px 4px}
+#yceo-m .m-tbl.dues .ein{height:28px}
+#yceo-m .m-tbl.dues label.mid{margin-top:2px}
+#yceo-m .m-tbl.dues td.nowrap .btn{margin:1px 0}
+@media (max-width:1100px){
+  #yceo-m table{min-width:0;font-size:14px}
+  #yceo-m .m-wrap{padding-left:12px;padding-right:12px}
+  #yceo-m .m-tbl th,#yceo-m .m-tbl td{padding:6px 6px}
+  #yceo-m .m-tbl th{font-size:12.5px}
+  #yceo-m .m-tbl.roster td.prod{min-width:90px}
+  #yceo-m .m-tbl .btn.xs{padding:3px 7px!important;font-size:12px!important}
+  #yceo-m .m-tbl .btn.sm{padding:4px 8px!important;font-size:12.5px!important}
+  #yceo-m .m-tbl .chip{font-size:12px;padding:1px 7px}
+  #yceo-m .m-tbl.dues label.mid{font-size:11px}
+  #yceo-m .m-tbl.apps td.st{min-width:140px}
+  #yceo-m .m-tbl.roster .lk{font-size:15px}
+}
+@media (max-width:640px){
+  #yceo-m .m-tbl.roster td.prod{min-width:120px}
+}
 /* 첫 화면: 알파 셋 인사 */
 #yceo-walk{position:fixed;top:0;left:0;right:0;bottom:0;z-index:2147483060;display:flex;align-items:center;justify-content:center;cursor:pointer;background:radial-gradient(ellipse at 50% 45%,#ffffff 0%,#f3f8f5 55%,#e6efea 100%);opacity:1;transition:opacity 1.4s ease;font-family:"Noto Sans KR","Apple SD Gothic Neo",sans-serif}
 #yceo-walk.out{opacity:0;pointer-events:none}
@@ -3023,7 +3052,7 @@ function yceoMembers(root, ENDPOINT, LOGO, onRole){
     return bar('입회신청 관리', '서류의 📝 아이콘으로 신청서를 확인한 뒤, 상태 칸의 [승인] 버튼을 누르면 정회원이 되어 회원명부에 자동 등록됩니다. 대기 ' + pend + '건',
         '<select class="m-inp" id="app-f" style="flex:0 1 170px"><option value="">전체</option><option value="접수"' + (appF === '접수' ? ' selected' : '') + '>접수 (대기)</option><option value="정회원"' + (appF === '정회원' ? ' selected' : '') + '>정회원</option><option value="반려"' + (appF === '반려' ? ' selected' : '') + '>반려</option></select>')
       + (list.length ? '<div class="m-tbl apps"><table><thead><tr><th>접수일</th><th>회사명</th><th>신청자</th><th>추천인</th><th>서류</th><th>상태 · 처리</th></tr></thead><tbody>'
-        + list.map(o => '<tr><td>' + esc(o.at) + (o.status === '접수' ? NEW : '') + '</td><td><b>' + esc(o.company) + '</b><span class="sub">' + esc(o.product) + '</span></td><td>' + esc(o.name) + '<span class="sub">' + esc(o.phone) + '</span></td><td>' + esc(o.rec1) + (o.rec2 ? ', ' + esc(o.rec2) : '') + '</td>'
+        + list.map(o => '<tr><td>' + esc(String(o.at || '').slice(0, 10)) + (o.status === '접수' ? NEW : '') + '</td><td><b>' + esc(o.company) + '</b><span class="sub">' + esc(o.product) + '</span></td><td>' + esc(o.name) + '<span class="sub">' + esc(o.phone) + '</span></td><td>' + esc(o.rec1) + (o.rec2 ? ', ' + esc(o.rec2) : '') + '</td>'
           + '<td><div class="ico"><button type="button" title="신청서" aria-label="신청서 보기" data-app="' + o.row + '">📝</button><button type="button" title="사업자등록증" data-file="biz" data-row="' + o.row + '"' + (o.biz ? '' : ' disabled') + '>🏢</button><button type="button" title="공장등록증" data-file="fac" data-row="' + o.row + '"' + (o.fac ? '' : ' disabled') + '>🏭</button><button type="button" title="명함" data-file="card" data-row="' + o.row + '"' + (o.card ? '' : ' disabled') + '>📇</button></div></td>'
           + '<td class="st" data-strow="' + o.row + '">' + stCell(o) + '</td></tr>').join('')
         + '</tbody></table></div>' : empty('해당하는 입회신청서가 없습니다', '홈페이지에서 입회신청서가 저장되면 이곳에 나타납니다.'));
