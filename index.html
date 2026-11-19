@@ -1353,6 +1353,14 @@ body.app #yceo-mo{top:0!important}
 #yceo-m .m-tbl.dues td:nth-child(2),#yceo-m .m-tbl.hist td:nth-child(2){padding-left:2.2em!important}
 #yceo-m .m-tbl.dues tr.grp td,#yceo-m .m-tbl.hist tr.grp td{text-align:left;padding-left:14px!important}
 }
+/* 찬조금 표: 일자·회사명·회원명 가운데 */
+#yceo-m .m-tbl.spon th:nth-child(-n+3),#yceo-m .m-tbl.spon td:nth-child(-n+3){text-align:center!important}
+#yceo-m .m-tbl.spon tr.tot td:first-child{text-align:left!important}
+/* PC 입출금내역: 일자·분류 가운데 */
+@media (min-width:1101px){
+#yceo-m .m-tbl.bank th:nth-child(1),#yceo-m .m-tbl.bank td:nth-child(1),#yceo-m .m-tbl.bank th:nth-child(3),#yceo-m .m-tbl.bank td:nth-child(3){text-align:center!important}
+#yceo-m .m-tbl.bank tr.tot td:first-child{text-align:left!important}
+}
 /* 첫 화면: 알파 셋 인사 */
 #yceo-walk{position:fixed;top:0;left:0;right:0;bottom:0;z-index:2147483060;display:flex;align-items:center;justify-content:center;cursor:pointer;background:radial-gradient(ellipse at 50% 45%,#ffffff 0%,#f3f8f5 55%,#e6efea 100%);opacity:1;transition:opacity 1.4s ease;font-family:"Noto Sans KR","Apple SD Gothic Neo",sans-serif}
 #yceo-walk.out{opacity:0;pointer-events:none}
@@ -2974,7 +2982,7 @@ function yceoMembers(root, ENDPOINT, LOGO, onRole){
       + '<div class="sum"><span>잔액 (' + (duesYear === cy ? (bk.last ? bk.last + ' 기준' : '현재') : duesYear + '년 말 기준') + ')</span><b>' + won(bk.end) + '원</b><span>입금 ' + won(bk.inn) + '<br>출금 ' + won(bk.out) + '</span></div></div>'
       + (duesSec === 'spon' ? (''
       + (A ? '<div class="admin-box row-add spon"><input class="ein" type="date" id="sn-date"><select class="ein" id="sn-who"><option value="">업체 선택</option>' + (D.members || []).concat(D.former || []).slice().sort((a,b) => String(a.company).localeCompare(String(b.company), 'ko')).map(m => '<option value="' + m.row + '">' + esc(m.company) + ' · ' + esc(m.name) + '</option>').join('') + '<option value="0">직접 입력 (외부)</option></select><input class="ein" id="sn-co" placeholder="외부 업체·성명 (직접 입력 시)"><input class="ein" id="sn-amt" inputmode="numeric" placeholder="금액"><input class="ein" id="sn-memo" placeholder="메모"><button type="button" class="btn sm" data-a="snadd">추가</button></div>' : '')
-      + (spl.length ? '<div class="m-tbl tight spon cmp"><table><thead><tr><th>일자</th><th>업체명</th><th>성명</th><th class="y-num">금액</th><th>메모</th>' + (A ? '<th></th>' : '') + '</tr></thead><tbody>'
+      + (spl.length ? '<div class="m-tbl tight spon cmp"><table><thead><tr><th>일자</th><th>회사명</th><th>회원명</th><th class="y-num">금액</th><th>메모</th>' + (A ? '<th></th>' : '') + '</tr></thead><tbody>'
         + spl.slice().sort((a,b) => String(b.date).localeCompare(String(a.date))).map(x => '<tr><td>' + esc(x.date || '-') + '</td><td class="co">' + esc(x.company) + (isNew('dues', x.createdAt) ? NEW : '') + (x.memo ? '<span class="sub mob-memo">' + esc(x.memo) + '</span>' : '') + '</td><td>' + esc(x.name) + '</td><td class="y-num">' + won(x.amount) + '원</td><td>' + esc(x.memo || '') + '</td>' + (A ? '<td><button type="button" class="btn line sm" data-del="sponDel" data-id="' + esc(x.id) + '">삭제</button></td>' : '') + '</tr>').join('')
         + '<tr class="tot"><td colspan="3"><b>합계</b></td><td class="y-num"><b>' + won(spon) + '원</b></td><td colspan="' + (A ? 2 : 1) + '"></td></tr></tbody></table></div>' : empty(duesYear + '년 찬조금 내역이 없습니다'))
       ) : duesSec === 'bank' ? (''
