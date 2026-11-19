@@ -1347,6 +1347,12 @@ body.app #yceo-mo{top:0!important}
 #yceo-m .rsvp button.no:not([aria-pressed="true"]){background:#fbe5e1!important;border-color:#efc0b8!important;color:#a3362a!important}
 #yceo-m .rsvp button.maybe:not([aria-pressed="true"]){background:#fdf0d6!important;border-color:#eed39a!important;color:#86560b!important}
 #yceo-m .rsvp button:not([aria-pressed="true"]):hover{filter:brightness(.96)}
+/* PC 회비 납부내역·연도별: 이름 가운데, 회사명 들여쓰기 */
+@media (min-width:1101px){
+#yceo-m .m-tbl.dues th:first-child,#yceo-m .m-tbl.dues td:first-child,#yceo-m .m-tbl.hist th:first-child,#yceo-m .m-tbl.hist td:first-child{text-align:center}
+#yceo-m .m-tbl.dues td:nth-child(2),#yceo-m .m-tbl.hist td:nth-child(2){padding-left:2.2em!important}
+#yceo-m .m-tbl.dues tr.grp td,#yceo-m .m-tbl.hist tr.grp td{text-align:left;padding-left:14px!important}
+}
 /* 첫 화면: 알파 셋 인사 */
 #yceo-walk{position:fixed;top:0;left:0;right:0;bottom:0;z-index:2147483060;display:flex;align-items:center;justify-content:center;cursor:pointer;background:radial-gradient(ellipse at 50% 45%,#ffffff 0%,#f3f8f5 55%,#e6efea 100%);opacity:1;transition:opacity 1.4s ease;font-family:"Noto Sans KR","Apple SD Gothic Neo",sans-serif}
 #yceo-walk.out{opacity:0;pointer-events:none}
@@ -2976,7 +2982,7 @@ function yceoMembers(root, ENDPOINT, LOGO, onRole){
       + ledger('club', duesYear)
       ) : (''
       + '<div class="m-tool"><select class="m-inp" id="dues-f"><option value="">전체 (' + all.length + '명)</option><option value="paid"' + (duesF === 'paid' ? ' selected' : '') + '>납부 완료</option><option value="part"' + (duesF === 'part' ? ' selected' : '') + '>분납</option><option value="unpaid"' + (duesF === 'unpaid' ? ' selected' : '') + '>미납</option></select></div>'
-      + (all.length ? '<div class="m-tbl tight dues cmp"><table><thead><tr><th>이름</th><th>업체명</th><th class="c">연회비</th><th class="c">납부액</th><th class="c">납부일</th><th class="c">상태</th>' + (A ? '<th class="c">관리</th>' : '') + '</tr></thead><tbody>'
+      + (all.length ? '<div class="m-tbl tight dues cmp"><table><thead><tr><th>이름</th><th>회사명</th><th class="c">연회비</th><th class="c">납부액</th><th class="c">납부일</th><th class="c">상태</th>' + (A ? '<th class="c">관리</th>' : '') + '</tr></thead><tbody>'
         + list.map(m => { const d = duesOf(m.row), s = dst(+d.paid || 0, d); const nt = d.note ? '<span class="sub dnote" title="' + esc(d.note) + '">※ ' + esc(d.note) + '</span>' : '';
           return '<tr' + (m.former ? ' class="fmr"' : '') + '><td><b>' + esc(m.name) + '</b>' + (m.former ? ' ' + FMR : '') + (isNew('dues', d.updatedAt) ? NEW : '') + '</td><td class="co">' + esc(m.company) + '</td><td class="c">' + won(fee) + '</td>'
           + (A ? '<td class="c pd"><input class="ein y-num" id="dp' + m.row + '" inputmode="numeric" data-comma="1" value="' + won(+d.paid || 0) + '">' + nt + '</td><td class="c"><input class="ein" type="date" id="dd' + m.row + '" value="' + esc(d.date) + '"></td>'
@@ -3015,7 +3021,7 @@ function yceoMembers(root, ENDPOINT, LOGO, onRole){
         '<div class="m-right"><div class="seg"><button type="button" data-dv="year" data-y="' + cy + '" aria-pressed="false">' + cy + '년</button><button type="button" data-dv="hist" aria-pressed="true">연도별 내역</button></div></div>')
       + '<div class="m-tbl tight"><table><thead><tr><th>연도</th><th class="y-num">대상 회원</th><th class="y-num">걷힌 회비</th><th class="y-num">납부율</th><th class="y-num">완납</th><th class="y-num">미납</th><th class="y-num">찬조금</th><th class="y-num">통장 입금</th><th class="y-num">통장 출금</th><th class="y-num">통장 잔액</th></tr></thead><tbody>' + rows + '</tbody></table></div>'
       + '<h3 class="h-sub">회원별 연도 납부 현황</h3>'
-      + (all.length ? '<div class="m-tbl tight hist cmp"><table><thead><tr><th>이름</th><th>업체명</th>' + years.map(y => '<th class="c">' + y + '</th>').join('') + '</tr></thead><tbody>'
+      + (all.length ? '<div class="m-tbl tight hist cmp"><table><thead><tr><th>이름</th><th>회사명</th>' + years.map(y => '<th class="c">' + y + '</th>').join('') + '</tr></thead><tbody>'
         + all.map(m => '<tr' + (m.former ? ' class="fmr"' : '') + '><td><b>' + esc(m.name) + '</b>' + (m.former ? ' ' + FMR : '') + '</td><td class="co">' + esc(m.company) + '</td>' + years.map(y => cell(y, m)).join('') + '</tr>').join('')
         + '</tbody></table></div>' : empty('정회원이 없습니다'));
   }
