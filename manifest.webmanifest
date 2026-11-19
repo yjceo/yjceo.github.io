@@ -1,0 +1,16 @@
+{
+  "name": "여주시기업인협의회",
+  "short_name": "기업인협의회",
+  "description": "여주시기업인협의회 회원 전용 앱 — 게시판·회원명부·회비·정기모임·골프모임",
+  "start_url": "./?app=1",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0e2a2c",
+  "lang": "ko",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
